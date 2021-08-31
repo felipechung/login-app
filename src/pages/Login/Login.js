@@ -1,9 +1,14 @@
-import React from "react";
+import { useContext, useState } from "react";
 import ReactDOM from "react-dom";
+import { useHistory } from "react-router-dom";
+import { Context } from "../../Context/AuthContext";
 import { useFormik } from "formik";
 import "./Login.css";
 
 const Login = () => {
+  const { setAuthenticated } = useContext(Context);
+  const history = useHistory();
+
   const validate = (values) => {
     const errors = {};
 
@@ -25,6 +30,11 @@ const Login = () => {
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      //fetch api for login
+      //header ----> moises
+      //value ----> goEmqjjC.aO79X8z9Ajur0mG6lgezmRpRaDwVOl9H
+      setAuthenticated(true);
+      history.push("/home");
     },
   });
   return (
