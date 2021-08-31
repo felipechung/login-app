@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import ReactDOM from "react-dom";
+import { useContext } from "react";
+
 import { useHistory } from "react-router-dom";
 import { Context } from "../../context/AuthContext";
 import { useFormik } from "formik";
@@ -32,11 +32,18 @@ const Login = () => {
       alert(JSON.stringify(values, null, 2));
 
       console.log(values);
-      api.post("/auth/token/", { values }).then((res) => {
-        console.log(res);
-      });
-      setAuthenticated(true);
-      history.push("/home");
+      api
+        .post("/auth/token/", values)
+        .then((response) => {
+          console.log(response);
+          // localStorage.setItem("token", );
+
+          setAuthenticated(true);
+          history.push("/home");
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   });
   return (

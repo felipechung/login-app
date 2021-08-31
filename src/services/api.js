@@ -7,4 +7,18 @@ const api = axios.create({
   },
 });
 
+// api.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     console.log(error);
+//     if (error.response.status === 401) {
+//     //   localStorage.removeItem("Authorization");
+//       window.location.href = "/";
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
 export default api;
