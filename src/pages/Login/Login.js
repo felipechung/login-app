@@ -1,38 +1,40 @@
 import { useContext, useState } from "react";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
-import { Context } from "../../Context/AuthContext";
+import { Context } from "../../context/AuthContext";
 import { useFormik } from "formik";
+import api from "../../services/api";
 import "./Login.css";
+
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = "Required";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = "Invalid email address";
+  }
+
+  return errors;
+};
 
 const Login = () => {
   const { setAuthenticated } = useContext(Context);
   const history = useHistory();
-
-  const validate = (values) => {
-    const errors = {};
-
-    if (!values.email) {
-      errors.email = "Required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
-    }
-
-    return errors;
-  };
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    validate,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
-      //fetch api for login
-      //header ----> moises
-      //value ----> goEmqjjC.aO79X8z9Ajur0mG6lgezmRpRaDwVOl9H
+
+      console.log(values);
+      api.post("/auth/token/", { values }).then((res) => {
+        console.log(res);
+      });
       setAuthenticated(true);
       history.push("/home");
     },
