@@ -29,14 +29,14 @@ const Login = () => {
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-
-      console.log(values);
       api
         .post("/auth/token/", values)
         .then((response) => {
-          console.log(response);
-          // localStorage.setItem("token", );
+          const refresh_token = response.data.tokens.refresh;
+          const access_token = response.data.tokens.access;
+
+          localStorage.setItem("access_token", access_token);
+          localStorage.setItem("refresh_token", refresh_token);
 
           setAuthenticated(true);
           history.push("/home");

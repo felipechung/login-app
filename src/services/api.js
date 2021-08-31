@@ -7,18 +7,18 @@ const api = axios.create({
   },
 });
 
-// api.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     console.log(error);
-//     if (error.response.status === 401) {
-//     //   localStorage.removeItem("Authorization");
-//       window.location.href = "/";
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    const access_token = localStorage.getItem("access_token");
+    if (error.response.status === 401 && access_token) {
+      //   localStorage.removeItem("Authorization");
+      window.location.href = "/";
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;

@@ -7,7 +7,7 @@ import Home from "./pages/Home/Home";
 
 function PrivateRoute({ ...rest }) {
   const { authenticated } = useContext(Context);
-  console.log(authenticated);
+
   if (!authenticated) {
     return <Redirect to="/" />;
   }
