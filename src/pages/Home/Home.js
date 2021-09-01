@@ -14,9 +14,15 @@ function Home() {
   function handleHitAPI(e) {
     e.preventDefault();
     api
-      .get("/auth/workers/")
+      .get("/auth/workers/", {
+        headers: {
+          moises: "goEmqjjC.aO79X8z9Ajur0mG6lgezmRpRaDwVOl9H",
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      })
       .then((response) => {
         console.log(response);
+        console.log(response.config.headers.Authorization);
       })
       .catch((error) => {
         console.log(error.response);

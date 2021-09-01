@@ -4,18 +4,27 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home";
 import { parseJwt } from "./utils";
 
-function LoggedRoute({ ...rest }) {
+//Route for Already Loggedin users
+//Access to route depends on the access token
+//If there is a valid access token, show current Route
+//if no valid token, redirect to login page
+function LoggedInRoute({ ...rest }) {
   const accessToken = localStorage.getItem("access_token");
+  console.log(accessToken);
   let isTokenValid;
 
+  //Token Validation using a function to decode the token and get the expiration date(time)
+  //parseJwt returns everything from payload but I only need the expiration date
   if (accessToken) {
-    const tokenExpiration = parseJwt(accessToken).exp;
-    isTokenValid = Date.now() < tokenExpiration * 1000;
+    const tokenExpiration = parseJwt(accessToken).exp; //exp in seconds since Unix epoch
+    isTokenValid = Date.now() < tokenExpiration * 1000; //1000 to convert to the same base
   } else {
-    isTokenValid = false;
+    isTokenValid = false; //if no access token, token is not valid
   }
 
   if (!isTokenValid) {
+    //if token is not valid, redirect to login
+
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     return <Redirect to="/" />;
@@ -24,8 +33,11 @@ function LoggedRoute({ ...rest }) {
   return <Route {...rest} />;
 }
 
-function UnloggedRoute({ ...rest }) {
+//Route for Loggedout Users.
+//If there is no token, go to login page
+function LoggedOutRoute({ ...rest }) {
   const accessToken = localStorage.getItem("access_token");
+
   if (accessToken) {
     return <Redirect to="/home" />;
   }
@@ -37,8 +49,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <UnloggedRoute exact path="/" component={Login} />
-          <LoggedRoute exact path="/home" component={Home} />
+          <LoggedOutRoute exact path="/" component={Login} />
+          <LoggedInRoute exact path="/home" component={Home} />
         </Switch>
       </BrowserRouter>
     </div>
