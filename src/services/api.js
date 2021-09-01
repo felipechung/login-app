@@ -4,6 +4,9 @@ const api = axios.create({
   baseURL: "https://abastecendo.com.br",
   headers: {
     moises: "goEmqjjC.aO79X8z9Ajur0mG6lgezmRpRaDwVOl9H",
+    Authorization: localStorage.getItem("access_token")
+      ? "Bearer " + localStorage.getItem("access_token")
+      : null,
   },
 });
 
@@ -12,10 +15,10 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    const access_token = localStorage.getItem("access_token");
-    if (error.response.status === 401 && access_token) {
-      //   localStorage.removeItem("Authorization");
-      window.location.href = "/";
+    if (error.response.status === 401) {
+      // localStorage.removeItem("access_token");
+      // localStorage.removeItem("refresh_token");
+      // window.location.href = "/";
     }
     return Promise.reject(error);
   }

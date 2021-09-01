@@ -1,7 +1,5 @@
-import { useContext } from "react";
-
 import { useHistory } from "react-router-dom";
-import { Context } from "../../context/AuthContext";
+
 import { useFormik } from "formik";
 import api from "../../services/api";
 import "./Login.css";
@@ -19,7 +17,6 @@ const validate = (values) => {
 };
 
 const Login = () => {
-  const { setAuthenticated } = useContext(Context);
   const history = useHistory();
 
   const formik = useFormik({
@@ -38,7 +35,6 @@ const Login = () => {
           localStorage.setItem("access_token", access_token);
           localStorage.setItem("refresh_token", refresh_token);
 
-          setAuthenticated(true);
           history.push("/home");
         })
         .catch((error) => {

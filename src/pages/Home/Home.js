@@ -1,19 +1,33 @@
-import { useContext } from "react";
 import { useHistory } from "react-router";
-import { Context } from "../../context/AuthContext";
+import api from "../../services/api";
 
 function Home() {
   const history = useHistory();
-  const { setAuthenticated } = useContext(Context);
+
   function handleLogout(e) {
     e.preventDefault();
-    setAuthenticated(false);
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     history.push("/");
   }
+
+  function handleHitAPI(e) {
+    e.preventDefault();
+    api
+      .get("/auth/workers/")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  }
+
   return (
     <div>
       <h1>Você foi logado com sucesso!</h1>
       <button onClick={handleLogout}>Logout</button>
+      <button onClick={handleHitAPI}>Hit API</button>
     </div>
   );
 }
