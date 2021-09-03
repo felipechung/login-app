@@ -10,7 +10,7 @@ import { parseJwt } from "./utils";
 //if no valid token, redirect to login page
 function LoggedInRoute({ ...rest }) {
   const accessToken = localStorage.getItem("access_token");
-  console.log(accessToken);
+
   let isTokenValid;
 
   //Token Validation using a function to decode the token and get the expiration date(time)
