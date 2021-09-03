@@ -21,6 +21,7 @@ function Home() {
         },
       })
       .then((response) => {
+        alert("Token válido");
         console.log(response);
       })
       .catch((error) => {

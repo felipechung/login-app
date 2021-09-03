@@ -12,7 +12,6 @@ const api = axios.create({
 
 api.interceptors.response.use(
   (response) => {
-    alert("Token válido");
     return response;
   },
   (error) => {
