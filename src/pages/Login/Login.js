@@ -39,6 +39,7 @@ const Login = () => {
         })
         .catch((error) => {
           console.log(error.response);
+          alert("Usuário ou senha inválidos");
         });
     },
   });
