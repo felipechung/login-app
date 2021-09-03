@@ -24,7 +24,7 @@ function LoggedInRoute({ ...rest }) {
 
   if (!isTokenValid) {
     //if token is not valid, redirect to login
-
+    alert("Token inválido");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     return <Redirect to="/" />;
