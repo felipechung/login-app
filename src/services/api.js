@@ -18,7 +18,6 @@ api.interceptors.response.use(
     if (error.response.status === 401) {
       alert("Token expirado");
       localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
       window.location.href = "/";
     }
     return Promise.reject(error);

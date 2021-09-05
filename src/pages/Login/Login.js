@@ -25,24 +25,19 @@ const Login = () => {
       password: "",
     },
     validate,
-    onSubmit: (values) => {
-      api
-        .post("/auth/token/", values)
-        .then((response) => {
-          const refresh_token = response.data.tokens.refresh;
-          const access_token = response.data.tokens.access;
-
-          localStorage.setItem("access_token", access_token);
-          localStorage.setItem("refresh_token", refresh_token);
-
-          history.push("/home");
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("Usuário ou senha inválidos");
-        });
+    onSubmit: async (values) => {
+      try {
+        const response = await api.post("/auth/token/", values);
+        const accessToken = response.data.tokens.access;
+        localStorage.setItem("access_token", accessToken);
+        history.push("/home");
+      } catch (error) {
+        console.log(error);
+        alert("Usuário ou senha inválidos");
+      }
     },
   });
+
   return (
     <>
       <h1>Login</h1>

@@ -26,7 +26,7 @@ function LoggedInRoute({ ...rest }) {
     //if token is not valid, redirect to login
     alert("Token inválido");
     localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+
     return <Redirect to="/" />;
   }
 
@@ -51,6 +51,7 @@ function App() {
         <Switch>
           <LoggedOutRoute exact path="/" component={Login} />
           <LoggedInRoute exact path="/home" component={Home} />
+          <Redirect to="/" />
         </Switch>
       </BrowserRouter>
     </div>

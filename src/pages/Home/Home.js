@@ -4,30 +4,25 @@ import api from "../../services/api";
 function Home() {
   const history = useHistory();
 
-  function handleLogout(e) {
-    e.preventDefault();
+  const handleLogout = () => {
     localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
     history.push("/");
-  }
+  };
 
-  function handleHitAPI(e) {
-    e.preventDefault();
-    api
-      .get("/auth/workers/", {
+  const handleHitAPI = async () => {
+    try {
+      const response = await api.get("/auth/workers/", {
         headers: {
           moises: "goEmqjjC.aO79X8z9Ajur0mG6lgezmRpRaDwVOl9H",
           Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
-      })
-      .then((response) => {
-        alert("Token válido");
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.response);
       });
-  }
+      alert("Token válido");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
