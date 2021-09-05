@@ -15,7 +15,7 @@ function LoggedInRoute({ ...rest }) {
     alert("Token inválido");
     localStorage.removeItem("access_token");
 
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 
   return <Route {...rest} />;
@@ -35,9 +35,9 @@ function LoggedOutRoute({ ...rest }) {
 export default function Routes() {
   return (
     <Switch>
-      <LoggedOutRoute exact path="/" component={Login} />
+      <LoggedOutRoute exact path="/login" component={Login} />
       <LoggedInRoute exact path="/home" component={Home} />
-      <Redirect to="/" />
+      <Redirect to="/login" />
     </Switch>
   );
 }

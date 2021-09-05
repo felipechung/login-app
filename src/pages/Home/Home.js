@@ -6,7 +6,7 @@ function Home() {
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
-    history.push("/");
+    history.push("/login");
   };
 
   const handleHitAPI = async () => {
